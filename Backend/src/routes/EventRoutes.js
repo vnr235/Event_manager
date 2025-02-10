@@ -104,14 +104,17 @@ router.put("/:id", authMiddleware, async (req, res) => {
 router.delete("/:id", authMiddleware, async (req, res) => {
     try {
         const event = await Event.findById(req.params.id);
-        if (!event || event.createdBy.toString() !== req.id) {
+        // Allow deletion if the user is the creator or if the user has admin privileges
+        if (!event || (event.createdBy.toString() !== req.id && req.user.role !== 'admin')) {
             return res.status(403).json({ error: "Unauthorized" });
         }
         await Event.findByIdAndDelete(req.params.id);
         res.json({ message: "Event deleted successfully" });
     } catch (error) {
+        console.error("Error deleting event:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
 
 module.exports = router;

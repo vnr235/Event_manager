@@ -12,6 +12,9 @@ function authMiddleware(req, res, next) {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        // Attach the full decoded token to req.user
+        req.user = decoded;
+        // Optionally, set req.id for convenience
         req.id = decoded.id;
         next();
     } catch (error) {
