@@ -58,43 +58,56 @@ function DashboardPage() {
   const handleJoinEvent = async (eventId) => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("user");
-
+  
     if (!token || !userId) {
       alert("Please log in to join an event.");
       return;
     }
-
+  
     try {
       await axios.put(`https://event-manager-figl.onrender.com/api/v1/user/join/${eventId}`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+  
+      // Emit the socket event to notify all clients (including self)
       socket.emit("joinEvent", { eventId, userId });
-
+  
+      // Update local state for joined events (if needed for UI)
       setUserJoinedEvents((prev) => new Set(prev).add(eventId));
+  
+      // Remove manual attendee count update; rely on socket update instead.
+      // setAttendeeCounts((prev) => ({
+      //   ...prev,
+      //   [eventId]: (prev[eventId] || 0) + 1,
+      // }));
     } catch (error) {
       console.error("Error joining event:", error);
     }
   };
-
+  
+  
   const handleLeaveEvent = async (eventId) => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("user");
-
+  
     if (!token || !userId) return;
-
+  
     try {
       await axios.delete(`https://event-manager-figl.onrender.com/api/v1/user/leave/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+  
+      // Emit the socket event to notify all clients (including self)
       socket.emit("leaveEvent", { eventId, userId });
-
+  
+      // Update the set of events the user has joined
       setUserJoinedEvents((prev) => {
         const updated = new Set(prev);
         updated.delete(eventId);
         return updated;
       });
+  
+      // Remove manual update of attendeeCounts here as well.
     } catch (error) {
       console.error("Error leaving event:", error);
     }
