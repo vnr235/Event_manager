@@ -22,7 +22,7 @@ export default function AdminDashboard() {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:3000/api/v1/event/get', {
+      const response = await axios.get('https://event-manager-figl.onrender.com/api/v1/event/get', {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log(response.data);
@@ -53,7 +53,7 @@ export default function AdminDashboard() {
     try {
       setLoading(true);
       // Axios will handle Content-Type automatically for FormData.
-      await axios.post('http://localhost:3000/api/v1/event/add', formData, {
+      await axios.post('https://event-manager-figl.onrender.com/api/v1/event/add', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -84,7 +84,7 @@ export default function AdminDashboard() {
   
     try {
       setLoading(true);
-      await axios.put(`http://localhost:3000/api/v1/event/${editingEvent._id}`, updateData, {
+      await axios.put(`https://event-manager-figl.onrender.com/api/v1/event/${editingEvent._id}`, updateData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -106,7 +106,7 @@ export default function AdminDashboard() {
 
     try {
       setLoading(true);
-      await axios.delete(`http://localhost:3000/api/v1/event/${eventId}`, {
+      await axios.delete(`https://event-manager-figl.onrender.com/api/v1/event/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
