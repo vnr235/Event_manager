@@ -16,7 +16,7 @@ function SignupPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/user/register', {
+      const response = await axios.post('https://event-manager-figl.onrender.com/api/v1/user/register', {
         name,
         email,
         password,
