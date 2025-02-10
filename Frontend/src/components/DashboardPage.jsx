@@ -12,7 +12,7 @@ function DashboardPage() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/api/v1/event/get", {
+        const { data } = await axios.get("https://event-manager-figl.onrender.com/api/v1/event/get", {
           params: { category, sort: sortOrder },
         });
 
@@ -65,7 +65,7 @@ function DashboardPage() {
     }
 
     try {
-      await axios.put(`http://localhost:3000/api/v1/user/join/${eventId}`, {}, {
+      await axios.put(`https://event-manager-figl.onrender.com/api/v1/user/join/${eventId}`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -84,7 +84,7 @@ function DashboardPage() {
     if (!token || !userId) return;
 
     try {
-      await axios.delete(`http://localhost:3000/api/v1/user/leave/${eventId}`, {
+      await axios.delete(`https://event-manager-figl.onrender.com/api/v1/user/leave/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
