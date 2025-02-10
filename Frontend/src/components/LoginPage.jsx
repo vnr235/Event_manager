@@ -7,7 +7,7 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null); 
-  const API_URL = "http://localhost:3000/api/v1/user/signin";
+  const API_URL = "https://event-manager-figl.onrender.com/api/v1/user/signin";
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
